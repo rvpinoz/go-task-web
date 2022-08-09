@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css"
+          integrity="sha384-SI27wrMjH3ZZ89r4o+fGIJtnzkAnFs3E4qz9DIYioCQ5l9Rd/7UAa8DHcaL8jkWt" crossorigin="anonymous">
+    <title>Project Golang Web</title>
+</head>
+
+<body>
+    <div style="text-align: center;"><h1>Project Golang Web</h1></div>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header">Add a task</div>
+            <div class="card-body">
+                <form action="/add" method="post">
+                    <div class="form-group">
+                        <label for="Task">Task</label>
+                        <input type="text" class="form-control" name="task" placeholder="Input Task!">
+                        <label for="Assignee">Assignee</label>
+                        <input type="text" class="form-control" name="assignee" placeholder="Input Assignee!">
+                        <label for="Deadline">Deadline</label>
+                        <input type="date" class="form-control" name="deadline" >
+<!--                        <small class="form-text text-muted">Enter task..</small>-->
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    &nbsp;
+    &nbsp;
+    <div class="container">
+        <div class="card">
+            <div class="card-header">List Tasks</div>
+            <div class="card-body">
+                <table class="table ">
+                    <thead>
+                    <tr>
+                        <th scope="col">Task</th>
+                        <th scope="col">Assignee</th>
+                        <th scope="col">Deadline</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{range .Todos}}
+                        {{if .Status}}
+                            <tr>
+                                <td><strike>{{.Task}}</strike></td>
+                                <td><strike>{{.Assignee}}</strike></td>
+                                <td><strike>{{.Deadline}}</strike></td>
+                                <td style="-webkit-text-fill-color: darkgreen">Done</td>
+                                <td>
+                                    <button class="btn btn-primary" disabled>Done</button>
+                                    <button class="btn btn-danger" disabled>Delete</button>
+                                </td>
+                            </tr>
+                        {{else}}
+                            <tr>
+                                <td>{{.Task}}</td>
+                                <td>{{.Assignee}}</td>
+                                <td>{{.Deadline}}</td>
+                                <td style="-webkit-text-fill-color: darkorange">Pending</td>
+                                <td>
+                                    <a href="/done/{{ .Id}}"><button class="btn btn-primary">Done</button></a>
+                                    <a href="/delete/{{ .Id}}"><button class="btn btn-danger">Delete</button></a>
+                                </td>
+                            </tr>
+                        {{end}}
+                    {{end}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
